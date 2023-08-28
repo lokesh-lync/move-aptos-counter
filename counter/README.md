@@ -3,5 +3,5 @@
 ### Run tests
 
 ```bash
-apto move test
+aptos move test
 ```
