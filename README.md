@@ -1,2 +1,3 @@
 # move-aptos-examples
-Just a few move contracts on aptos
+
+Experimenting with move modules on aptos
