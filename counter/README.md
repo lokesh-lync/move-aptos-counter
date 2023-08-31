@@ -1,7 +1,15 @@
 # Simple Counter contract
 
+> Make sure aptos cli is installed
+
+### Compile move files
+
+```bash
+aptos move compile
+```
+
 ### Run tests
 
 ```bash
-apto move test
+aptos move test
 ```
