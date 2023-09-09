@@ -1,10 +1,10 @@
 [package]
-name = "aptos-counter"
+name = "collection"
 version = "1.0.0"
 authors = []
 
 [addresses]
-publisher = "0x123"
+publisher = "0x345"
 
 [dev-addresses]
 
