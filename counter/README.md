@@ -7,3 +7,9 @@
 ```bash
 aptos move compile
 ```
+
+### Run tests
+
+```bash
+aptos move test
+```
