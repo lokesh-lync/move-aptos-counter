@@ -1,9 +1,12 @@
 module publisher::Collection {
 
-    use 0x1::vector;
-    use 0x1::signer;
+    use std::vector;
+    use std::signer;
  
-    struct Item has store, drop {}
+    struct Item has store, drop {
+        id: u64,
+        qty: u64
+    }
 
     struct Collection has key, store {
         items: vector<Item>
@@ -26,11 +29,11 @@ module publisher::Collection {
         vector::length(&collection.items)
     }
 
-    public fun add_item(account: &signer) acquires Collection {
+    public fun add_item(account: &signer, id: u64, qty: u64) acquires Collection {
         let owner = signer::address_of(account);
         let collection = borrow_global_mut<Collection>(owner);
 
-        vector::push_back(&mut collection.items, Item {});
+        vector::push_back(&mut collection.items, Item { id, qty });
     }
 
     public fun destroy(account: &signer) acquires Collection {

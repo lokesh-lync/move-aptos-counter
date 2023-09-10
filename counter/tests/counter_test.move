@@ -11,10 +11,9 @@ module publisher::counter_tests {
     }
 
     #[test]
-    public entry fun test_init() {
+    public fun test_init() {
         let account = get_account();
         let addr = signer::address_of(&account);
-        aptos_framework::account::create_account_for_test(addr);
         counter::bump(account);
         assert!(
             counter::get_count(addr) == 0,
@@ -23,10 +22,9 @@ module publisher::counter_tests {
     }
 
     #[test]
-    public entry fun test_bump() {
+    public fun test_bump() {
         let account = get_account();
         let addr = signer::address_of(&account);
-        aptos_framework::account::create_account_for_test(addr);
         counter::bump(account);
         assert!(
             counter::get_count(addr) == 0,
