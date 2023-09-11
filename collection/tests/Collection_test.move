@@ -38,20 +38,38 @@ module publisher::Collection_tests {
         let account = get_account();
         Collection::start_collection(&account);
         // Add item to collection
-        Collection::add_item(&account, 1, 25);
+        Collection::add_item(&account, b"item1", 100);
         // Collection should not be empty
         assert!(
             Collection::size(&account) == 1,
             3
         );
         // Add another item to collection
-        Collection::add_item(&account, 2, 50);
-        // Collection should have 2 items
+        Collection::add_item(&account, b"item2", 200);
+        // Collection should now have 2 items
         assert!(
             Collection::size(&account) == 2,
             4
         );
     }
-    // @todo: add more tests
+
+    #[test]
+    public fun test_destroy_collection(){
+        let account = get_account();
+        let addr = signer::address_of(&account);
+        Collection::start_collection(&account);
+        assert!(
+            Collection::check_exists(addr) == true,
+            5
+        );
+        // destroy collection from address
+        Collection::destroy(&account);
+        // collection should not exist anymore 
+        assert!(
+            Collection::check_exists(addr) == false,
+            6
+        );
+    }
+    // @todo - add more tests
 
 }
