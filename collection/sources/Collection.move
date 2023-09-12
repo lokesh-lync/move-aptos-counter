@@ -3,7 +3,7 @@ module publisher::Collection {
     use std::vector;
     use std::signer;
  
-    struct Item has store, drop {
+    struct Item has store, drop, copy {
         id: u64,
         name: vector<u8>,
         qty: u64
@@ -13,7 +13,7 @@ module publisher::Collection {
         items: vector<Item>
     }
 
-    fun create_item(id: u64, name: vector<u8>, qty: u64): Item {
+    public fun create_item(id: u64, name: vector<u8>, qty: u64): Item {
         Item { id, name, qty }
     }
 
@@ -42,26 +42,34 @@ module publisher::Collection {
         vector::push_back(&mut collection.items, create_item(last_id + 1, name, qty));
     }
 
-    public fun find_item(account: &signer, _item_id: u64) acquires Collection { 
+    public fun get_all_items(account: &signer): vector<Item> acquires Collection {
         let owner = signer::address_of(account);
-        let _collection = borrow_global_mut<Collection>(owner);
-        
-
- //       let (exists, index) = vector::index_of<Item>(&collection.items);
-        /*
-        let i = 0;
-        while(i < total_item_in_collection){
-            if(vector::contains<Item>())
-            i = i + 1;
-        }
-        */
+        assert!(check_exists(owner), 0);
+        let collection = borrow_global<Collection>(owner);
+        collection.items
     }
 
-    public fun destroy(account: &signer) acquires Collection {
+    public fun find_item_in_collection(account: &signer, item_id: u64): Item acquires Collection { 
+        let owner = signer::address_of(account);
+        assert!(check_exists(owner), 0);
+        let collection = borrow_global_mut<Collection>(owner);
+        let items = &collection.items;
+
+        let i = 0;
+        while(i < vector::length(items)){
+            let item = vector::borrow<Item>(items, i);
+            if (item.id == item_id){
+                return *item
+            };
+            i = i + 1;
+        };
+        abort 0
+    }
+
+    public fun destroy_collection(account: &signer) acquires Collection {
         let owner = signer::address_of(account);
         assert!(check_exists(owner), 0);
         let collection = move_from<Collection>(owner);
         let Collection { items: _ } = collection;
     }
-    // @todo - add more code
 }
