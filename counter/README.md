@@ -13,3 +13,7 @@ aptos move compile
 ```bash
 aptos move test
 ```
+
+### Frontend app
+
+[Built using vite + TS](./client)
