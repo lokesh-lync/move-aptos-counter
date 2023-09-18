@@ -1,7 +1,6 @@
-# client for counter module
+# Client for counter module
 
-> **Warning**
-> Not complete yet!
+> Use [Martian Wallet](https://martianwallet.xyz/) to interact with the module
 
 ### Run app
 
