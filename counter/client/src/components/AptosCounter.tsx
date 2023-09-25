@@ -65,7 +65,7 @@ export default function AptosCounter() {
       const txnHash =
         await window.martian.signAndSubmitTransaction(transaction);
       setTxnLink(
-        `https://explorer.aptoslabs.com/txn/${txnHash}?network=devnet`,
+        `https://explorer.aptoslabs.com/txn/${txnHash}?network=testnet`,
       );
       load();
     } catch (e) {
