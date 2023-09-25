@@ -3,7 +3,7 @@ import { movePublisher } from "../config";
 import { AptosClient } from "aptos";
 import LoadingSpinner from "./LoadingSpinner";
 
-const client = new AptosClient("https://fullnode.testnet.aptoslabs.com/v1");
+const client = new AptosClient("https://testnet.aptoslabs.com");
 
 export default function AptosCounter() {
   const [loader, setLoader] = useState(false);
@@ -35,37 +35,33 @@ export default function AptosCounter() {
 
   const connect = async () => {
     setLoader(true);
-    if (window.martian == null) {
-      alert("Please install the Martian Wallet");
+    if (window.aptos == null) {
+      alert("Please install the petra Wallet");
       setLoader(false);
       return;
     }
-    const _wallet = await window.martian.connect();
+    const _wallet = await window.aptos.connect();
     setWalletAddress(_wallet.address);
     setLoader(false);
   };
 
   const bump = async () => {
     setLoader(true);
-    if (window.martian == null) {
-      alert("Please install the Martian Wallet");
+    if (window.aptos == null) {
+      alert("Please install the aptos Wallet");
       setLoader(false);
       return;
     }
     try {
-      const payload = {
+      const transaction = {
+        type: "entry_function_payload",
         function: `${movePublisher}::counter::bump`,
         type_arguments: [],
         arguments: [],
       };
-      const transaction = await window.martian.generateTransaction(
-        walletAddress,
-        payload,
-      );
-      const txnHash =
-        await window.martian.signAndSubmitTransaction(transaction);
+      const txn = await window.aptos.signAndSubmitTransaction(transaction);
       setTxnLink(
-        `https://explorer.aptoslabs.com/txn/${txnHash}?network=testnet`,
+        `https://explorer.aptoslabs.com/txn/${txn.hash}?network=testnet`,
       );
       load();
     } catch (e) {
