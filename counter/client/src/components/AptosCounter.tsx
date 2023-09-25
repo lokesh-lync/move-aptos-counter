@@ -1,9 +1,9 @@
 import { useEffect, useState } from "react";
 import { movePublisher } from "../config";
-import { AptosClient, Types } from "aptos";
+import { AptosClient } from "aptos";
 import LoadingSpinner from "./LoadingSpinner";
 
-const client = new AptosClient("https://fullnode.devnet.aptoslabs.com/v1");
+const client = new AptosClient("https://fullnode.testnet.aptoslabs.com/v1");
 
 export default function AptosCounter() {
   const [loader, setLoader] = useState(false);
